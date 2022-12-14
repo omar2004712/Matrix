@@ -15,6 +15,9 @@ public class Main {
         Matrix matrix = new Matrix(matrixValues);
         Matrix matrix2 = new Matrix(matrix2Values);
 
-        matrix.subtract(matrix2).printMatrix();
+        double[] columnUpdate = { 5, 5, 5 };
+        matrix.setRow(columnUpdate, 1);
+        matrix.setEntry(4, 1, 1);
+        matrix.printMatrix();
     }
 }

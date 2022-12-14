@@ -228,6 +228,32 @@ public class Matrix {
     public Matrix subtract(Matrix matrix2) throws Exception {
         return operate(matrix2, '-');
     }
+
+    public void setMatrix(double[][] matrix) throws Exception {
+        areRowsOfEqualLength(matrix);
+
+        this.matrix = matrix;
+    }
+
+    public void setRow(double[] row, int i) throws Exception {
+        if (matrix[0].length != row.length)
+            throw new RowsOfEqualLengthsException("Rows must have equal lengths");
+
+        matrix[i] = row;
+    }
+
+    public void setColumn(double[] column, int j) throws Exception {
+        if (column.length != matrix.length)
+            throw new ColumnsOfEqualLengthsException("Columns must have equal lengths");
+
+        for(int i = 0; i < matrix.length; i++) {
+            matrix[i][j] = column[i];
+        }
+    }
+
+    public void setEntry(double entry, int i, int j) {
+        matrix[i][j] = entry;
+    }
 }
 
 class InvalidDimensionsException extends Exception {
@@ -238,6 +264,12 @@ class InvalidDimensionsException extends Exception {
 
 class RowsOfEqualLengthsException extends Exception {
     RowsOfEqualLengthsException(String msg) {
+        super(msg);
+    }
+}
+
+class ColumnsOfEqualLengthsException extends Exception {
+    ColumnsOfEqualLengthsException(String msg) {
         super(msg);
     }
 }
