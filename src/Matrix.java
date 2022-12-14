@@ -254,6 +254,14 @@ public class Matrix {
     public void setEntry(double entry, int i, int j) {
         matrix[i][j] = entry;
     }
+
+    public void multiplyScalar(double scalar) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                matrix[i][j] = scalar * matrix[i][j];
+            }
+        }
+    }
 }
 
 class InvalidDimensionsException extends Exception {

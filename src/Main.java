@@ -12,12 +12,12 @@ public class Main {
                 { 7, 8, 9 }
         };
 
+
+        Matrix identity = new Matrix();
         Matrix matrix = new Matrix(matrixValues);
         Matrix matrix2 = new Matrix(matrix2Values);
 
-        double[] columnUpdate = { 5, 5, 5 };
-        matrix.setRow(columnUpdate, 1);
-        matrix.setEntry(4, 1, 1);
-        matrix.printMatrix();
+        identity.multiplyScalar(2);
+        identity.printMatrix();
     }
 }
