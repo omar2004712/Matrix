@@ -16,7 +16,7 @@ public class Matrix {
     private void areRowsOfEqualLength(double[][] matrix) throws Exception {
         for (int i = 1; i < matrix.length; i++) {
             if (matrix[i].length != matrix[i - 1].length)
-                throw new Exception("Rows must be of equal length");
+                throw new RowsOfEqualLengthsException("Rows must be of equal length");
         }
     }
 
@@ -57,7 +57,7 @@ public class Matrix {
     public void isSquare() throws Exception {
         for(double[] row: matrix) {
             if (row.length != matrix.length) {
-                throw new Exception("Array must be a square");
+                throw new SquareArrayException("Array must be a square");
             }
         }
     }
@@ -232,6 +232,18 @@ public class Matrix {
 
 class InvalidDimensionsException extends Exception {
     InvalidDimensionsException(String msg) {
+        super(msg);
+    }
+}
+
+class RowsOfEqualLengthsException extends Exception {
+    RowsOfEqualLengthsException(String msg) {
+        super(msg);
+    }
+}
+
+class SquareArrayException extends Exception {
+    SquareArrayException(String msg) {
         super(msg);
     }
 }
