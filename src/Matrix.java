@@ -3,7 +3,7 @@ public class Matrix {
             {1, 0, 0},
             {0, 1, 0},
             {0, 0, 1}
-    };;
+    };
 
     Matrix(double[][] matrix) throws Exception {
         areRowsOfEqualLength(matrix);
@@ -40,7 +40,7 @@ public class Matrix {
         printMatrix(matrix);
     }
 
-    public void printMatrix(double[][] matrix) {
+    private void printMatrix(double[][] matrix) {
         int maxEntryLength = getMaxEntryLength();
 
         for(double[] row: matrix) {
@@ -48,9 +48,9 @@ public class Matrix {
                 int entryLen = String.valueOf(entry).length();
                 int multiply = maxEntryLength - entryLen;
 
-                System.out.print(" ".repeat(multiply) + entry + ",  ");
+                System.out.print(" ".repeat(multiply + 1) + entry + " ");
             }
-            System.out.print('\n');
+            System.out.print("\n");
         }
     }
 
@@ -80,7 +80,7 @@ public class Matrix {
         return getDeterminant(matrix);
     }
 
-    public double getDeterminant(double[][] matrix) throws Exception {
+    private double getDeterminant(double[][] matrix) throws Exception {
         isSquare();
 
         if (matrix.length == 1) {
@@ -116,7 +116,7 @@ public class Matrix {
         return new Matrix(getCofactor());
     }
 
-    public double[][] getTranspose(double[][] matrix) {
+    private double[][] getTranspose(double[][] matrix) {
         double[][] transposeMatrix = new double[matrix[0].length][matrix.length];
 
         for(int i = 0; i < matrix.length; i++) {
@@ -128,7 +128,7 @@ public class Matrix {
         return transposeMatrix;
     }
 
-    public double[][] getTranspose() throws Exception {
+    private double[][] getTranspose() throws Exception {
         return getTranspose(matrix);
     }
 
@@ -169,5 +169,69 @@ public class Matrix {
 
     public Matrix getInverseMatrix() throws Exception {
         return new Matrix(getInverse());
+    }
+
+    private double[][] getMatrix() {
+        return matrix;
+    }
+
+    public Matrix multiply(Matrix matrix2) throws Exception{
+        double[][] matrix2Values = matrix2.getMatrix();
+
+        if (matrix[0].length != matrix2Values.length)
+            throw new InvalidDimensionsException("Invalid dimensions");
+
+
+        double[][] resultMatrix = new double[matrix.length][matrix2Values[0].length];
+
+        for(int i = 0; i < resultMatrix.length; i++) {
+            for (int j = 0; j < resultMatrix[0].length; j++) {
+                resultMatrix[i][j] = 0;
+
+                for(int k = 0; k < matrix2Values.length; k++) {
+                    resultMatrix[i][j] += matrix[i][k] * matrix2Values[k][j];
+                }
+            }
+        }
+
+        return new Matrix(resultMatrix);
+    }
+
+    private Matrix operate(Matrix matrix2, char operation) throws Exception {
+        double[][] matrix2Values = matrix2.getMatrix();
+
+        if (matrix.length != matrix2Values.length || matrix[0].length != matrix2Values[0].length)
+            throw new InvalidDimensionsException("Invalid dimensions");
+
+        double[][] resultMatrix = new double[matrix.length][matrix[0].length];
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                switch (operation) {
+                    case '+':
+                        resultMatrix[i][j] = matrix[i][j] + matrix2Values[i][j];
+                        break;
+                    case '-':
+                        resultMatrix[i][j] = matrix[i][j] - matrix2Values[i][j];
+                        break;
+                }
+            }
+        }
+
+        return new Matrix(resultMatrix);
+    }
+
+    public Matrix add(Matrix matrix2) throws Exception {
+        return operate(matrix2, '+');
+    }
+
+    public Matrix subtract(Matrix matrix2) throws Exception {
+        return operate(matrix2, '-');
+    }
+}
+
+class InvalidDimensionsException extends Exception {
+    InvalidDimensionsException(String msg) {
+        super(msg);
     }
 }

@@ -6,8 +6,15 @@ public class Main {
                 { 1, 2, 3 }
         };
 
-        Matrix matrix = new Matrix(matrixValues);
+        double[][] matrix2Values = {
+                { 1, 2, 3 },
+                { 4, 5, 6 },
+                { 7, 8, 9 }
+        };
 
-        matrix.getInverseMatrix().printMatrix();
+        Matrix matrix = new Matrix(matrixValues);
+        Matrix matrix2 = new Matrix(matrix2Values);
+
+        matrix.subtract(matrix2).printMatrix();
     }
 }
